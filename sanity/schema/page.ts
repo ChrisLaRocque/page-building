@@ -1,8 +1,10 @@
 import { defineType, defineField } from "sanity";
+import { RiPagesLine } from "react-icons/ri";
 
 export const pageType = defineType({
   name: "page",
   type: "document",
+  icon: RiPagesLine,
   fields: [
     defineField({
       name: "title",
@@ -14,6 +16,11 @@ export const pageType = defineType({
       options: {
         source: "title",
       },
+    }),
+    defineField({
+      name: "sections",
+      type: "array",
+      of: [{ type: "carouselHero" }, { type: "hero" }, { type: "split" }],
     }),
   ],
 });

@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { VisualEditing } from "next-sanity";
 import { draftMode } from "next/headers";
+import PrelineScript from "@/components/preline-script";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,14 +20,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <main>{children}</main>
+        <main className="mx-auto max-w-7xl">{children}</main>
+
+        <PrelineScript />
         {draftMode().isEnabled && (
           <>
             <div>
-              <a className="p-4 bg-blue-300 block" href="/api/disable-draft">
+              <a className="block bg-blue-300 p-4" href="/api/disable-draft">
                 Disable preview mode
               </a>
-            </div>{" "}
+            </div>
             <VisualEditing />
           </>
         )}

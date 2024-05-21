@@ -1,10 +1,42 @@
-import { QueryParams, SanityDocument, groq } from "next-sanity";
+import { QueryParams, groq } from "next-sanity";
 import { notFound } from "next/navigation";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { AllPageQueryResult, PageQueryResult } from "@/sanity/types";
+import SectionResolver from "@/components/section-resolver";
 
 const allPageQuery = groq`*[_type == "page"]`;
-const pageQuery = groq`*[_type == "page" && slug.current == $slug][0]`;
+const pageQuery = groq`*[_type == "page" && slug.current == $slug][0]{
+  sections[]{
+    _key,
+    _type,
+    _type == "carouselHero" => {
+      items[]{
+        headline,
+        eyebrow,
+        image,
+        _key,
+        button{
+          to->,
+          text
+        }
+      }
+    },
+    _type == "hero" => {
+      headline,
+      eyebrow,
+      image,
+      button{
+        to->,
+        text
+      }
+    },
+    _type == "split" => {
+      headline,
+      body,
+      image,
+    }
+  }
+}`;
 
 export async function generateStaticParams() {
   const posts = await sanityFetch<AllPageQueryResult>({
@@ -23,6 +55,14 @@ export default async function Page({ params }: { params: QueryParams }) {
   if (!page) {
     return notFound();
   }
+  const { sections } = page;
 
-  return <section>{page.title}</section>;
+  return (
+    <div>
+      {sections &&
+        sections.map((section) => {
+          return <SectionResolver key={section._key} section={section} />;
+        })}
+    </div>
+  );
 }
