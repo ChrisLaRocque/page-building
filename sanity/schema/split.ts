@@ -1,8 +1,10 @@
 import { defineField, defineType } from "sanity";
+import { BsLayoutSplit } from "react-icons/bs";
 
 export const splitType = defineType({
   name: "split",
   type: "object",
+  icon: BsLayoutSplit,
   fields: [
     defineField({
       name: "headline",
@@ -18,4 +20,17 @@ export const splitType = defineType({
       of: [{ type: "block" }],
     }),
   ],
+  preview: {
+    select: {
+      title: "headline",
+      media: "image",
+    },
+    prepare({ title, media }) {
+      return {
+        title,
+        subtitle: "Split",
+        media,
+      };
+    },
+  },
 });

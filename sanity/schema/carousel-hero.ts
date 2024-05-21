@@ -17,4 +17,17 @@ export const carouselHeroType = defineType({
       of: [{ type: "hero" }],
     }),
   ],
+  preview: {
+    select: {
+      title: "title",
+      items: "items",
+    },
+    prepare({ title, items }) {
+      return {
+        title,
+        subtitle: "Carousel hero",
+        media: items[0].image,
+      };
+    },
+  },
 });
