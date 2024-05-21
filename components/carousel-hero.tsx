@@ -1,10 +1,10 @@
 import Hero from "./hero";
 import {
-  type Hero as HeroType,
   type CarouselHero as CarouselHeroType,
+  type Hero as HeroType,
 } from "@/sanity/types";
 
-function CarouselItem({ item }) {
+function CarouselItem({ item }: { item: HeroType }) {
   return (
     <div className="hs-carousel-slide">
       <Hero {...item} />
