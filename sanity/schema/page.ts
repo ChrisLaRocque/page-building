@@ -20,7 +20,12 @@ export const pageType = defineType({
     defineField({
       name: "sections",
       type: "array",
-      of: [{ type: "carouselHero" }, { type: "hero" }, { type: "split" }],
+      of: [
+        { type: "carouselHero" },
+        { type: "hero" },
+        { type: "split" },
+        { type: "cards" },
+      ],
     }),
   ],
 });

@@ -14,7 +14,7 @@ function CarouselItem({ item }) {
 
 export default function CarouselHero({ items }: CarouselHeroType) {
   return (
-    <section className="px-4 py-10 lg:px-6">
+    <section className="px-4 py-10 lg:px-0">
       <div
         data-hs-carousel='{
       "loadingClasses": "opacity-0"

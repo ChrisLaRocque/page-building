@@ -4,7 +4,8 @@ import "./globals.css";
 import { VisualEditing } from "next-sanity";
 import { draftMode } from "next/headers";
 import PrelineScript from "@/components/preline-script";
-
+import Nav from "@/components/nav";
+import Footer from "@/components/footer";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -20,13 +21,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+        <Nav />
         <main className="mx-auto max-w-7xl">{children}</main>
-
+        <Footer />
         <PrelineScript />
         {draftMode().isEnabled && (
           <>
             <div>
-              <a className="block bg-blue-300 p-4" href="/api/disable-draft">
+              <a className="block bg-lime-300 p-4" href="/api/disable-draft">
                 Disable preview mode
               </a>
             </div>

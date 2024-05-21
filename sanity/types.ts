@@ -68,6 +68,41 @@ export type Geopoint = {
   alt?: number;
 };
 
+export type Cards = {
+  _type: "cards";
+  headline?: string;
+  subHeading?: string;
+  ctaText?: string;
+  cards?: Array<{
+    featured?: boolean;
+    badge?: string;
+    headline?: string;
+    body?: string;
+    image?: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+    };
+    cta?: {
+      ctaText?: string;
+      to?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "page";
+      };
+    };
+    _type: "card";
+    _key: string;
+  }>;
+};
+
 export type Split = {
   _type: "split";
   headline?: string;
@@ -156,6 +191,9 @@ export type Page = {
     | ({
         _key: string;
       } & Split)
+    | ({
+        _key: string;
+      } & Cards)
   >;
 };
 
@@ -236,6 +274,9 @@ export type AllPageQueryResult = Array<{
   sections?: Array<
     | ({
         _key: string;
+      } & Cards)
+    | ({
+        _key: string;
       } & CarouselHero)
     | ({
         _key: string;
@@ -246,9 +287,60 @@ export type AllPageQueryResult = Array<{
   >;
 }>;
 // Variable: pageQuery
-// Query: *[_type == "page" && slug.current == $slug][0]{  sections[]{    _key,    _type,    _type == "carouselHero" => {      items[]{        headline,        eyebrow,        image,        _key,        button{          to->,          text        }      }    },    _type == "hero" => {      headline,      eyebrow,      image,      button{        to->,        text      }    },    _type == "split" => {      headline,      body,      image,    }  }}
+// Query: *[_type == "page" && slug.current == $slug][0]{  sections[]{    _key,    _type,    _type == "carouselHero" => {      items[]{        headline,        eyebrow,        image{          ...,          "palette": asset->metadata.palette        },        _key,        button{          to->,          text        }      }    },    _type == "hero" => {      headline,      eyebrow,      image {        ...,        "palette": asset->metadata.palette      },      button{        to->,        text      }    },    _type == "split" => {      headline,      body,      image,    },    _type == "cards" => {      headline,      subHeading,      ctaText,      cards[]{        headline,        badge,        body,        featured,        cta{          ctaText,          to->        },        image {          ...,          "palette": asset->metadata.palette        }      },    }  }}
 export type PageQueryResult = {
   sections: Array<
+    | {
+        _key: string;
+        _type: "cards";
+        headline: string | null;
+        subHeading: string | null;
+        ctaText: string | null;
+        cards: Array<{
+          headline: string | null;
+          badge: string | null;
+          body: string | null;
+          featured: boolean | null;
+          cta: {
+            ctaText: string | null;
+            to: {
+              _id: string;
+              _type: "page";
+              _createdAt: string;
+              _updatedAt: string;
+              _rev: string;
+              title?: string;
+              slug?: Slug;
+              sections?: Array<
+                | ({
+                    _key: string;
+                  } & Cards)
+                | ({
+                    _key: string;
+                  } & CarouselHero)
+                | ({
+                    _key: string;
+                  } & Hero)
+                | ({
+                    _key: string;
+                  } & Split)
+              >;
+            } | null;
+          } | null;
+          image: {
+            asset?: {
+              _ref: string;
+              _type: "reference";
+              _weak?: boolean;
+              [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+            };
+            hotspot?: SanityImageHotspot;
+            crop?: SanityImageCrop;
+            _type: "image";
+            palette: SanityImagePalette | null;
+          } | null;
+        }> | null;
+      }
     | {
         _key: string;
         _type: "carouselHero";
@@ -265,6 +357,7 @@ export type PageQueryResult = {
             hotspot?: SanityImageHotspot;
             crop?: SanityImageCrop;
             _type: "image";
+            palette: SanityImagePalette | null;
           } | null;
           _key: string;
           button: {
@@ -277,6 +370,9 @@ export type PageQueryResult = {
               title?: string;
               slug?: Slug;
               sections?: Array<
+                | ({
+                    _key: string;
+                  } & Cards)
                 | ({
                     _key: string;
                   } & CarouselHero)
@@ -307,6 +403,7 @@ export type PageQueryResult = {
           hotspot?: SanityImageHotspot;
           crop?: SanityImageCrop;
           _type: "image";
+          palette: SanityImagePalette | null;
         } | null;
         button: {
           to: {
@@ -318,6 +415,9 @@ export type PageQueryResult = {
             title?: string;
             slug?: Slug;
             sections?: Array<
+              | ({
+                  _key: string;
+                } & Cards)
               | ({
                   _key: string;
                 } & CarouselHero)

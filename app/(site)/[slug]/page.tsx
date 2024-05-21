@@ -13,7 +13,10 @@ const pageQuery = groq`*[_type == "page" && slug.current == $slug][0]{
       items[]{
         headline,
         eyebrow,
-        image,
+        image{
+          ...,
+          "palette": asset->metadata.palette
+        },
         _key,
         button{
           to->,
@@ -24,7 +27,10 @@ const pageQuery = groq`*[_type == "page" && slug.current == $slug][0]{
     _type == "hero" => {
       headline,
       eyebrow,
-      image,
+      image {
+        ...,
+        "palette": asset->metadata.palette
+      },
       button{
         to->,
         text
@@ -34,6 +40,25 @@ const pageQuery = groq`*[_type == "page" && slug.current == $slug][0]{
       headline,
       body,
       image,
+    },
+    _type == "cards" => {
+      headline,
+      subHeading,
+      ctaText,
+      cards[]{
+        headline,
+        badge,
+        body,
+        featured,
+        cta{
+          ctaText,
+          to->
+        },
+        image {
+          ...,
+          "palette": asset->metadata.palette
+        }
+      },
     }
   }
 }`;
