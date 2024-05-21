@@ -7,7 +7,7 @@ export default function Split({ headline, body, image }: Split) {
     <section className="group mx-auto px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
       <div className="md:grid md:grid-cols-2 md:items-center md:gap-12 xl:gap-32">
         <div className="overflow-hidden rounded-xl group-odd:order-last">
-          <SanityImage height={450} image={image} />
+          {image && <SanityImage height={450} image={image} />}
         </div>
 
         <div className="mt-5 sm:mt-10 lg:mt-0">

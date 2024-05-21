@@ -5,11 +5,12 @@ import Link from "next/link";
 
 export default function Hero({ eyebrow, headline, image, button }: Hero) {
   const bgColor = image?.palette?.dominant?.background;
+  const textColor = image?.palette?.dominant?.foreground;
 
   return (
     <div
       style={image ? { backgroundImage: `url(${urlForImage(image)})` } : {}} // no way this is the only option, right?
-      className="relative flex h-[30rem] flex-col  bg-cover bg-center bg-no-repeat md:h-[calc(100vh-212px)]"
+      className="relative flex h-[30rem] flex-col overflow-hidden rounded-2xl  bg-cover bg-center bg-no-repeat md:h-[calc(100vh-212px)]"
     >
       <div
         style={{
@@ -18,9 +19,16 @@ export default function Hero({ eyebrow, headline, image, button }: Hero) {
         className="absolute inset-0 z-10 h-full w-full"
       />
       <div className="z-20 mt-auto w-2/3 pb-5 ps-5 md:max-w-lg md:pb-10 md:ps-10">
-        {eyebrow && <span className="block text-sm text-white">{eyebrow}</span>}
+        {eyebrow && (
+          <span style={{ color: textColor }} className="block text-sm">
+            {eyebrow}
+          </span>
+        )}
         {headline && (
-          <span className="block text-2xl text-white md:text-4xl">
+          <span
+            style={{ color: textColor }}
+            className="block text-2xl  md:text-4xl"
+          >
             {headline}
           </span>
         )}

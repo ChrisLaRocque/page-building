@@ -1,6 +1,7 @@
 import { urlForImage } from "@/sanity/lib/image";
 import { SanityAsset } from "@sanity/image-url/lib/types/types";
 import { Image } from "@unpic/react/nextjs";
+
 export default function SanityImage({
   image,
   height,

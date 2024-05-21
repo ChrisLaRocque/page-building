@@ -287,7 +287,7 @@ export type AllPageQueryResult = Array<{
   >;
 }>;
 // Variable: pageQuery
-// Query: *[_type == "page" && slug.current == $slug][0]{  sections[]{    _key,    _type,    _type == "carouselHero" => {      items[]{        headline,        eyebrow,        image{          ...,          "palette": asset->metadata.palette        },        _key,        button{          to->,          text        }      }    },    _type == "hero" => {      headline,      eyebrow,      image {        ...,        "palette": asset->metadata.palette      },      button{        to->,        text      }    },    _type == "split" => {      headline,      body,      image,    },    _type == "cards" => {      headline,      subHeading,      ctaText,      cards[]{        headline,        badge,        body,        featured,        cta{          ctaText,          to->        },        image {          ...,          "palette": asset->metadata.palette        }      },    }  }}
+// Query: *[_type == "page" && slug.current == $slug][0]{  sections[]{    _key,    _type,    _type == "carouselHero" => {      items[]{        headline,        eyebrow,        image{          ...,          "palette": asset->metadata.palette        },        _key,        button{          to->,          text        }      }    },    _type == "hero" => {      headline,      eyebrow,      image {        ...,        "palette": asset->metadata.palette      },      button{        to->,        text      }    },    _type == "split" => {      headline,      body,      image,    },    _type == "cards" => {      headline,      subHeading,      ctaText,      cards[]{        _key,        headline,        badge,        body,        featured,        cta{          ctaText,          to->        },        image {          ...,          "palette": asset->metadata.palette        }      },    }  }}
 export type PageQueryResult = {
   sections: Array<
     | {
@@ -297,6 +297,7 @@ export type PageQueryResult = {
         subHeading: string | null;
         ctaText: string | null;
         cards: Array<{
+          _key: string;
           headline: string | null;
           badge: string | null;
           body: string | null;

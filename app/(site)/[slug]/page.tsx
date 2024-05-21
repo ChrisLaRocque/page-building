@@ -46,6 +46,7 @@ const pageQuery = groq`*[_type == "page" && slug.current == $slug][0]{
       subHeading,
       ctaText,
       cards[]{
+        _key,
         headline,
         badge,
         body,
