@@ -68,6 +68,40 @@ export type Geopoint = {
   alt?: number;
 };
 
+export type Split = {
+  _type: "split";
+  headline?: string;
+  image?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  body?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+};
+
 export type Hero = {
   _type: "hero";
   headline?: string;
@@ -119,6 +153,9 @@ export type Page = {
     | ({
         _key: string;
       } & Hero)
+    | ({
+        _key: string;
+      } & Split)
   >;
 };
 
@@ -203,13 +240,17 @@ export type AllPageQueryResult = Array<{
     | ({
         _key: string;
       } & Hero)
+    | ({
+        _key: string;
+      } & Split)
   >;
 }>;
 // Variable: pageQuery
-// Query: *[_type == "page" && slug.current == $slug][0]{  sections[]{    _type == "carouselHero" => {      _type,      items[]{        headline,        eyebrow,        image,        button{          to->,          text        }      }    },    _type == "hero" => {      _type,      headline,      eyebrow,      image,      button{        to->,        text      }    }  }}
+// Query: *[_type == "page" && slug.current == $slug][0]{  sections[]{    _key,    _type,    _type == "carouselHero" => {      items[]{        headline,        eyebrow,        image,        _key,        button{          to->,          text        }      }    },    _type == "hero" => {      headline,      eyebrow,      image,      button{        to->,        text      }    },    _type == "split" => {      headline,      body,      image,    }  }}
 export type PageQueryResult = {
   sections: Array<
     | {
+        _key: string;
         _type: "carouselHero";
         items: Array<{
           headline: string | null;
@@ -225,6 +266,7 @@ export type PageQueryResult = {
             crop?: SanityImageCrop;
             _type: "image";
           } | null;
+          _key: string;
           button: {
             to: {
               _id: string;
@@ -241,6 +283,9 @@ export type PageQueryResult = {
                 | ({
                     _key: string;
                   } & Hero)
+                | ({
+                    _key: string;
+                  } & Split)
               >;
             } | null;
             text: string | null;
@@ -248,6 +293,7 @@ export type PageQueryResult = {
         }> | null;
       }
     | {
+        _key: string;
         _type: "hero";
         headline: string | null;
         eyebrow: string | null;
@@ -278,9 +324,54 @@ export type PageQueryResult = {
               | ({
                   _key: string;
                 } & Hero)
+              | ({
+                  _key: string;
+                } & Split)
             >;
           } | null;
           text: string | null;
+        } | null;
+      }
+    | {
+        _key: string;
+        _type: "split";
+        headline: string | null;
+        body: Array<{
+          children?: Array<{
+            marks?: Array<string>;
+            text?: string;
+            _type: "span";
+            _key: string;
+          }>;
+          style?:
+            | "blockquote"
+            | "h1"
+            | "h2"
+            | "h3"
+            | "h4"
+            | "h5"
+            | "h6"
+            | "normal";
+          listItem?: "bullet" | "number";
+          markDefs?: Array<{
+            href?: string;
+            _type: "link";
+            _key: string;
+          }>;
+          level?: number;
+          _type: "block";
+          _key: string;
+        }> | null;
+        image: {
+          asset?: {
+            _ref: string;
+            _type: "reference";
+            _weak?: boolean;
+            [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+          };
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          _type: "image";
         } | null;
       }
   > | null;

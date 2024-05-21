@@ -1,7 +1,8 @@
 import { PortableText } from "next-sanity";
 import SanityImage from "./sanity-image";
+import { type Split } from "@/sanity/types";
 
-export default function Split({ headline, body, image }) {
+export default function Split({ headline, body, image }: Split) {
   return (
     <section className="group mx-auto px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
       <div className="md:grid md:grid-cols-2 md:items-center md:gap-12 xl:gap-32">
