@@ -41,6 +41,11 @@ const pageQuery = groq`*[_type == "page" && slug.current == $slug][0]{
       body,
       image,
     },
+    _type == "frequentlyAskedQuestions" => {
+      heading,
+      body,
+      questions,
+    },
     _type == "cards" => {
       headline,
       subHeading,
@@ -82,7 +87,6 @@ export default async function Page({ params }: { params: QueryParams }) {
     return notFound();
   }
   const { sections } = page;
-
   return (
     <div>
       {sections &&
