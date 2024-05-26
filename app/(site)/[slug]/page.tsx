@@ -46,6 +46,10 @@ const pageQuery = groq`*[_type == "page" && slug.current == $slug][0]{
       body,
       questions,
     },
+    _type == "iconCards" => {
+      heading,
+      cards,
+    },
     _type == "cards" => {
       headline,
       subHeading,

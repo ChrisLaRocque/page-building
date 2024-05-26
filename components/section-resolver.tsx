@@ -3,6 +3,7 @@ import Split from "./split";
 import HeroSection from "./hero-section";
 import Cards from "./cards";
 import FAQ from "./faq";
+import IconCards from "./icon-cards";
 
 export default function SectionResolver({ section }) {
   switch (section._type) {
@@ -16,6 +17,8 @@ export default function SectionResolver({ section }) {
       return <Cards {...section} />;
     case "frequentlyAskedQuestions":
       return <FAQ {...section} />;
+    case "iconCards":
+      return <IconCards {...section} />;
     default:
       console.log("no component", section);
       return null;

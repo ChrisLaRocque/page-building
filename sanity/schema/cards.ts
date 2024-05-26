@@ -85,4 +85,17 @@ export const cardsType = defineType({
       ],
     }),
   ],
+  preview: {
+    select: {
+      title: "headline",
+      media: "cards",
+    },
+    prepare({ title, media }) {
+      return {
+        title,
+        subtitle: "Cards",
+        media: media[0].image,
+      };
+    },
+  },
 });

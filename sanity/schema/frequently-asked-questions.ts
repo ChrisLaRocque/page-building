@@ -30,4 +30,15 @@ export const faqType = defineType({
       ],
     }),
   ],
+  preview: {
+    select: {
+      title: "heading",
+    },
+    prepare({ title }) {
+      return {
+        title,
+        subtitle: "FAQ",
+      };
+    },
+  },
 });

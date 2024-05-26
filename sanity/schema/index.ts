@@ -5,7 +5,16 @@ import { heroType } from "./hero";
 import { splitType } from "./split";
 import { cardsType } from "./cards";
 import { faqType } from "./frequently-asked-questions";
+import { iconCardType } from "./icon-cards";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [pageType, carouselHeroType, heroType, splitType, cardsType, faqType],
+  types: [
+    pageType,
+    carouselHeroType,
+    heroType,
+    splitType,
+    cardsType,
+    faqType,
+    iconCardType,
+  ],
 };

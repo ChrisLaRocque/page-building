@@ -68,6 +68,47 @@ export type Geopoint = {
   alt?: number;
 };
 
+export type IconCards = {
+  _type: "iconCards";
+  heading?: string;
+  cards?: Array<{
+    icon?: "robot" | "box" | "bolt" | "trophy" | "people" | "thumb";
+    heading?: string;
+    body?: string;
+    _type: "iconCard";
+    _key: string;
+  }>;
+};
+
+export type FrequentlyAskedQuestions = {
+  _type: "frequentlyAskedQuestions";
+  heading?: string;
+  body?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  questions?: Array<{
+    question?: string;
+    answer?: string;
+    _type: "question";
+    _key: string;
+  }>;
+};
+
 export type Cards = {
   _type: "cards";
   headline?: string;
@@ -194,6 +235,12 @@ export type Page = {
     | ({
         _key: string;
       } & Cards)
+    | ({
+        _key: string;
+      } & FrequentlyAskedQuestions)
+    | ({
+        _key: string;
+      } & IconCards)
   >;
 };
 
@@ -280,14 +327,20 @@ export type AllPageQueryResult = Array<{
       } & CarouselHero)
     | ({
         _key: string;
+      } & FrequentlyAskedQuestions)
+    | ({
+        _key: string;
       } & Hero)
+    | ({
+        _key: string;
+      } & IconCards)
     | ({
         _key: string;
       } & Split)
   >;
 }>;
 // Variable: pageQuery
-// Query: *[_type == "page" && slug.current == $slug][0]{  sections[]{    _key,    _type,    _type == "carouselHero" => {      items[]{        headline,        eyebrow,        image{          ...,          "palette": asset->metadata.palette        },        _key,        button{          to->,          text        }      }    },    _type == "hero" => {      headline,      eyebrow,      image {        ...,        "palette": asset->metadata.palette      },      button{        to->,        text      }    },    _type == "split" => {      headline,      body,      image,    },    _type == "cards" => {      headline,      subHeading,      ctaText,      cards[]{        _key,        headline,        badge,        body,        featured,        cta{          ctaText,          to->        },        image {          ...,          "palette": asset->metadata.palette        }      },    }  }}
+// Query: *[_type == "page" && slug.current == $slug][0]{  sections[]{    _key,    _type,    _type == "carouselHero" => {      items[]{        headline,        eyebrow,        image{          ...,          "palette": asset->metadata.palette        },        _key,        button{          to->,          text        }      }    },    _type == "hero" => {      headline,      eyebrow,      image {        ...,        "palette": asset->metadata.palette      },      button{        to->,        text      }    },    _type == "split" => {      headline,      body,      image,    },    _type == "frequentlyAskedQuestions" => {      heading,      body,      questions,    },    _type == "iconCards" => {      heading,      cards,    },    _type == "cards" => {      headline,      subHeading,      ctaText,      cards[]{        _key,        headline,        badge,        body,        featured,        cta{          ctaText,          to->        },        image {          ...,          "palette": asset->metadata.palette        }      },    }  }}
 export type PageQueryResult = {
   sections: Array<
     | {
@@ -321,7 +374,13 @@ export type PageQueryResult = {
                   } & CarouselHero)
                 | ({
                     _key: string;
+                  } & FrequentlyAskedQuestions)
+                | ({
+                    _key: string;
                   } & Hero)
+                | ({
+                    _key: string;
+                  } & IconCards)
                 | ({
                     _key: string;
                   } & Split)
@@ -379,7 +438,13 @@ export type PageQueryResult = {
                   } & CarouselHero)
                 | ({
                     _key: string;
+                  } & FrequentlyAskedQuestions)
+                | ({
+                    _key: string;
                   } & Hero)
+                | ({
+                    _key: string;
+                  } & IconCards)
                 | ({
                     _key: string;
                   } & Split)
@@ -387,6 +452,43 @@ export type PageQueryResult = {
             } | null;
             text: string | null;
           } | null;
+        }> | null;
+      }
+    | {
+        _key: string;
+        _type: "frequentlyAskedQuestions";
+        heading: string | null;
+        body: Array<{
+          children?: Array<{
+            marks?: Array<string>;
+            text?: string;
+            _type: "span";
+            _key: string;
+          }>;
+          style?:
+            | "blockquote"
+            | "h1"
+            | "h2"
+            | "h3"
+            | "h4"
+            | "h5"
+            | "h6"
+            | "normal";
+          listItem?: "bullet" | "number";
+          markDefs?: Array<{
+            href?: string;
+            _type: "link";
+            _key: string;
+          }>;
+          level?: number;
+          _type: "block";
+          _key: string;
+        }> | null;
+        questions: Array<{
+          question?: string;
+          answer?: string;
+          _type: "question";
+          _key: string;
         }> | null;
       }
     | {
@@ -424,7 +526,13 @@ export type PageQueryResult = {
                 } & CarouselHero)
               | ({
                   _key: string;
+                } & FrequentlyAskedQuestions)
+              | ({
+                  _key: string;
                 } & Hero)
+              | ({
+                  _key: string;
+                } & IconCards)
               | ({
                   _key: string;
                 } & Split)
@@ -432,6 +540,18 @@ export type PageQueryResult = {
           } | null;
           text: string | null;
         } | null;
+      }
+    | {
+        _key: string;
+        _type: "iconCards";
+        heading: string | null;
+        cards: Array<{
+          icon?: "bolt" | "box" | "people" | "robot" | "thumb" | "trophy";
+          heading?: string;
+          body?: string;
+          _type: "iconCard";
+          _key: string;
+        }> | null;
       }
     | {
         _key: string;

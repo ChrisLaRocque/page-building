@@ -26,6 +26,7 @@ export const pageType = defineType({
         { type: "split" },
         { type: "cards" },
         { type: "frequentlyAskedQuestions" },
+        { type: "iconCards" },
       ],
     }),
   ],
