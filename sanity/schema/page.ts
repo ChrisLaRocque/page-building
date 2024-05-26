@@ -25,6 +25,7 @@ export const pageType = defineType({
         { type: "hero" },
         { type: "split" },
         { type: "cards" },
+        { type: "frequentlyAskedQuestions" },
       ],
     }),
   ],
