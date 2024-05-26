@@ -74,7 +74,6 @@ export const cardsType = defineType({
               media: "image",
             },
             prepare({ title, type, media }) {
-              console.log("type", type);
               return {
                 title,
                 subtitle: type ? "Featured" : "Default",

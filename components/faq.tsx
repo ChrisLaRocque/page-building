@@ -1,6 +1,6 @@
 import { PortableText } from "next-sanity";
 export default function FAQ({ heading, body, questions }) {
-  console.log("faq", questions);
+
   return (
     <section className="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
       <div className="grid gap-10 md:grid-cols-5">
