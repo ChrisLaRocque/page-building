@@ -27,6 +27,7 @@ export const pageType = defineType({
         { type: "cards" },
         { type: "frequentlyAskedQuestions" },
         { type: "iconCards" },
+        { type: "productCards" },
       ],
     }),
   ],

@@ -68,6 +68,33 @@ export type Geopoint = {
   alt?: number;
 };
 
+export type ProductCards = {
+  _type: "productCards";
+  cards?: Array<{
+    images?: Array<{
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+      _key: string;
+    }>;
+    callout?: string;
+    name?: string;
+    productCategory?:
+      | "Men's Shoes"
+      | "Basketball Shoes"
+      | "Men's Road Running Shoes";
+    price?: number;
+    _type: "productCard";
+    _key: string;
+  }>;
+};
+
 export type IconCards = {
   _type: "iconCards";
   heading?: string;
@@ -241,6 +268,9 @@ export type Page = {
     | ({
         _key: string;
       } & IconCards)
+    | ({
+        _key: string;
+      } & ProductCards)
   >;
 };
 
@@ -336,11 +366,14 @@ export type AllPageQueryResult = Array<{
       } & IconCards)
     | ({
         _key: string;
+      } & ProductCards)
+    | ({
+        _key: string;
       } & Split)
   >;
 }>;
 // Variable: pageQuery
-// Query: *[_type == "page" && slug.current == $slug][0]{  sections[]{    _key,    _type,    _type == "carouselHero" => {      items[]{        headline,        eyebrow,        image{          ...,          "palette": asset->metadata.palette        },        _key,        button{          to->,          text        }      }    },    _type == "hero" => {      headline,      eyebrow,      image {        ...,        "palette": asset->metadata.palette      },      button{        to->,        text      }    },    _type == "split" => {      headline,      body,      image,    },    _type == "frequentlyAskedQuestions" => {      heading,      body,      questions,    },    _type == "iconCards" => {      heading,      cards,    },    _type == "cards" => {      headline,      subHeading,      ctaText,      cards[]{        _key,        headline,        badge,        body,        featured,        cta{          ctaText,          to->        },        image {          ...,          "palette": asset->metadata.palette        }      },    }  }}
+// Query: *[_type == "page" && slug.current == $slug][0]{  sections[]{    _key,    _type,    _type == "carouselHero" => {      items[]{        headline,        eyebrow,        image{          ...,          "palette": asset->metadata.palette        },        _key,        button{          to->,          text        }      }    },    _type == "hero" => {      headline,      eyebrow,      image {        ...,        "palette": asset->metadata.palette      },      button{        to->,        text      }    },    _type == "split" => {      headline,      body,      image,    },    _type == "frequentlyAskedQuestions" => {      heading,      body,      questions,    },    _type == "iconCards" => {      heading,      cards,    },    _type == "cards" => {      headline,      subHeading,      ctaText,      cards[]{        _key,        headline,        badge,        body,        featured,        cta{          ctaText,          to->        },        image {          ...,          "palette": asset->metadata.palette        }      },    },    _type == "productCards" => {      cards[]{        name,        images,        price,        productCategory,        callout      }    }  }}
 export type PageQueryResult = {
   sections: Array<
     | {
@@ -381,6 +414,9 @@ export type PageQueryResult = {
                 | ({
                     _key: string;
                   } & IconCards)
+                | ({
+                    _key: string;
+                  } & ProductCards)
                 | ({
                     _key: string;
                   } & Split)
@@ -445,6 +481,9 @@ export type PageQueryResult = {
                 | ({
                     _key: string;
                   } & IconCards)
+                | ({
+                    _key: string;
+                  } & ProductCards)
                 | ({
                     _key: string;
                   } & Split)
@@ -535,6 +574,9 @@ export type PageQueryResult = {
                 } & IconCards)
               | ({
                   _key: string;
+                } & ProductCards)
+              | ({
+                  _key: string;
                 } & Split)
             >;
           } | null;
@@ -551,6 +593,32 @@ export type PageQueryResult = {
           body?: string;
           _type: "iconCard";
           _key: string;
+        }> | null;
+      }
+    | {
+        _key: string;
+        _type: "productCards";
+        cards: Array<{
+          name: string | null;
+          images: Array<{
+            asset?: {
+              _ref: string;
+              _type: "reference";
+              _weak?: boolean;
+              [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+            };
+            hotspot?: SanityImageHotspot;
+            crop?: SanityImageCrop;
+            _type: "image";
+            _key: string;
+          }> | null;
+          price: number | null;
+          productCategory:
+            | "Basketball Shoes"
+            | "Men's Road Running Shoes"
+            | "Men's Shoes"
+            | null;
+          callout: string | null;
         }> | null;
       }
     | {

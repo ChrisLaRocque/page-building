@@ -4,6 +4,7 @@ import HeroSection from "./hero-section";
 import Cards from "./cards";
 import FAQ from "./faq";
 import IconCards from "./icon-cards";
+import ProductCards from "./product-cards";
 
 export default function SectionResolver({ section }) {
   switch (section._type) {
@@ -19,6 +20,8 @@ export default function SectionResolver({ section }) {
       return <FAQ {...section} />;
     case "iconCards":
       return <IconCards {...section} />;
+    case "productCards":
+      return <ProductCards {...section} />;
     default:
       console.log("no component", section);
       return null;

@@ -69,6 +69,16 @@ const pageQuery = groq`*[_type == "page" && slug.current == $slug][0]{
           "palette": asset->metadata.palette
         }
       },
+    },
+    _type == "productCards" => {
+      cards[]{
+        name,
+        images,
+        price,
+        productCategory,
+        callout,
+        _key
+      }
     }
   }
 }`;
