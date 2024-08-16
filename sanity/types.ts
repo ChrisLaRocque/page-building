@@ -68,6 +68,65 @@ export type Geopoint = {
   alt?: number;
 };
 
+export type Stats = {
+  _type: "stats";
+  heading?: string;
+  stats?: Array<{
+    heading?: string;
+    number?: string;
+    subhead?: string;
+    _type: "stat";
+    _key: string;
+  }>;
+};
+
+export type PortableTextSection = {
+  _type: "portableTextSection";
+  body?: Array<
+    | {
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?:
+          | "normal"
+          | "h1"
+          | "h2"
+          | "h3"
+          | "h4"
+          | "h5"
+          | "h6"
+          | "blockquote";
+        listItem?: "bullet" | "number";
+        markDefs?: Array<{
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        level?: number;
+        _type: "block";
+        _key: string;
+      }
+    | {
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        _type: "image";
+        _key: string;
+      }
+    | ({
+        _key: string;
+      } & FrequentlyAskedQuestions)
+  >;
+};
+
 export type ProductCards = {
   _type: "productCards";
   cards?: Array<{
@@ -183,6 +242,7 @@ export type Split = {
     };
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
+    style?: "rounded" | "square";
     _type: "image";
   };
   body?: Array<{
@@ -241,6 +301,165 @@ export type CarouselHero = {
   >;
 };
 
+export type SanityAssistInstructionTask = {
+  _type: "sanity.assist.instructionTask";
+  path?: string;
+  instructionKey?: string;
+  started?: string;
+  updated?: string;
+  info?: string;
+};
+
+export type SanityAssistTaskStatus = {
+  _type: "sanity.assist.task.status";
+  tasks?: Array<
+    {
+      _key: string;
+    } & SanityAssistInstructionTask
+  >;
+};
+
+export type SanityAssistSchemaTypeAnnotations = {
+  _type: "sanity.assist.schemaType.annotations";
+  title?: string;
+  fields?: Array<
+    {
+      _key: string;
+    } & SanityAssistSchemaTypeField
+  >;
+};
+
+export type SanityAssistOutputType = {
+  _type: "sanity.assist.output.type";
+  type?: string;
+};
+
+export type SanityAssistOutputField = {
+  _type: "sanity.assist.output.field";
+  path?: string;
+};
+
+export type SanityAssistInstructionContext = {
+  _type: "sanity.assist.instruction.context";
+  reference?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "assist.instruction.context";
+  };
+};
+
+export type AssistInstructionContext = {
+  _id: string;
+  _type: "assist.instruction.context";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  context?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal";
+    listItem?: never;
+    markDefs?: null;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+};
+
+export type SanityAssistInstructionUserInput = {
+  _type: "sanity.assist.instruction.userInput";
+  message?: string;
+  description?: string;
+};
+
+export type SanityAssistInstructionPrompt = Array<{
+  children?: Array<
+    | {
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }
+    | ({
+        _key: string;
+      } & SanityAssistInstructionFieldRef)
+    | ({
+        _key: string;
+      } & SanityAssistInstructionContext)
+    | ({
+        _key: string;
+      } & SanityAssistInstructionUserInput)
+  >;
+  style?: "normal";
+  listItem?: never;
+  markDefs?: null;
+  level?: number;
+  _type: "block";
+  _key: string;
+}>;
+
+export type SanityAssistInstructionFieldRef = {
+  _type: "sanity.assist.instruction.fieldRef";
+  path?: string;
+};
+
+export type SanityAssistInstruction = {
+  _type: "sanity.assist.instruction";
+  prompt?: SanityAssistInstructionPrompt;
+  icon?: string;
+  title?: string;
+  userId?: string;
+  createdById?: string;
+  output?: Array<
+    | ({
+        _key: string;
+      } & SanityAssistOutputField)
+    | ({
+        _key: string;
+      } & SanityAssistOutputType)
+  >;
+};
+
+export type SanityAssistSchemaTypeField = {
+  _type: "sanity.assist.schemaType.field";
+  path?: string;
+  instructions?: Array<
+    {
+      _key: string;
+    } & SanityAssistInstruction
+  >;
+};
+
+export type TranslationMetadata = {
+  _id: string;
+  _type: "translation.metadata";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  translations?: Array<
+    {
+      _key: string;
+    } & InternationalizedArrayReferenceValue
+  >;
+  schemaTypes?: Array<string>;
+};
+
+export type InternationalizedArrayReferenceValue = {
+  _type: "internationalizedArrayReferenceValue";
+  value?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "page";
+  };
+};
+
 export type Page = {
   _id: string;
   _type: "page";
@@ -271,7 +490,14 @@ export type Page = {
     | ({
         _key: string;
       } & ProductCards)
+    | ({
+        _key: string;
+      } & PortableTextSection)
+    | ({
+        _key: string;
+      } & Stats)
   >;
+  language?: string;
 };
 
 export type SanityImageCrop = {
@@ -331,16 +557,78 @@ export type SanityImageMetadata = {
   isOpaque?: boolean;
 };
 
+export type InternationalizedArrayReference = Array<
+  {
+    _key: string;
+  } & InternationalizedArrayReferenceValue
+>;
+
+export type MediaTag = {
+  _id: string;
+  _type: "media.tag";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name?: Slug;
+};
+
 export type Slug = {
   _type: "slug";
   current?: string;
   source?: string;
 };
+
+export type AllSanitySchemaTypes =
+  | SanityImagePaletteSwatch
+  | SanityImagePalette
+  | SanityImageDimensions
+  | SanityFileAsset
+  | Geopoint
+  | Stats
+  | PortableTextSection
+  | ProductCards
+  | IconCards
+  | FrequentlyAskedQuestions
+  | Cards
+  | Split
+  | Hero
+  | CarouselHero
+  | SanityAssistInstructionTask
+  | SanityAssistTaskStatus
+  | SanityAssistSchemaTypeAnnotations
+  | SanityAssistOutputType
+  | SanityAssistOutputField
+  | SanityAssistInstructionContext
+  | AssistInstructionContext
+  | SanityAssistInstructionUserInput
+  | SanityAssistInstructionPrompt
+  | SanityAssistInstructionFieldRef
+  | SanityAssistInstruction
+  | SanityAssistSchemaTypeField
+  | TranslationMetadata
+  | InternationalizedArrayReferenceValue
+  | Page
+  | SanityImageCrop
+  | SanityImageHotspot
+  | SanityImageAsset
+  | SanityAssetSourceData
+  | SanityImageMetadata
+  | InternationalizedArrayReference
+  | MediaTag
+  | Slug;
 export declare const internalGroqTypeReferenceTo: unique symbol;
-// Source: ./app/(site)/[slug]/page.tsx
+// Source: ./app/sitemap.ts
 // Variable: allPageQuery
-// Query: *[_type == "page"]
+// Query: *[_type == "page"]{"slug":slug.current, _updatedAt, language}
 export type AllPageQueryResult = Array<{
+  slug: string | null;
+  _updatedAt: string;
+  language: string | null;
+}>;
+// Source: ./app/(site)/[language]/[slug]/page.tsx
+// Variable: allPageRouteQuery
+// Query: *[_type == "page"]
+export type AllPageRouteQueryResult = Array<{
   _id: string;
   _type: "page";
   _createdAt: string;
@@ -366,14 +654,21 @@ export type AllPageQueryResult = Array<{
       } & IconCards)
     | ({
         _key: string;
+      } & PortableTextSection)
+    | ({
+        _key: string;
       } & ProductCards)
     | ({
         _key: string;
       } & Split)
+    | ({
+        _key: string;
+      } & Stats)
   >;
+  language?: string;
 }>;
 // Variable: pageQuery
-// Query: *[_type == "page" && slug.current == $slug][0]{  sections[]{    _key,    _type,    _type == "carouselHero" => {      items[]{        headline,        eyebrow,        image{          ...,          "palette": asset->metadata.palette        },        _key,        button{          to->,          text        }      }    },    _type == "hero" => {      headline,      eyebrow,      image {        ...,        "palette": asset->metadata.palette      },      button{        to->,        text      }    },    _type == "split" => {      headline,      body,      image,    },    _type == "frequentlyAskedQuestions" => {      heading,      body,      questions,    },    _type == "iconCards" => {      heading,      cards,    },    _type == "cards" => {      headline,      subHeading,      ctaText,      cards[]{        _key,        headline,        badge,        body,        featured,        cta{          ctaText,          to->        },        image {          ...,          "palette": asset->metadata.palette        }      },    },    _type == "productCards" => {      cards[]{        name,        images,        price,        productCategory,        callout      }    }  }}
+// Query: *[_type == "page" && slug.current == $slug && language == $language][0]{  sections[]{    _key,    _type,    _type == "carouselHero" => {      items[]{        headline,        eyebrow,        image{          ...,          "palette": asset->metadata.palette        },        _key,        button{          to->,          text        }      }    },    _type == "hero" => {      headline,      eyebrow,      image {        ...,        "palette": asset->metadata.palette      },      button{        to->,        text      }    },    _type == "split" => {      headline,      body,      image,      styles    },    _type == "frequentlyAskedQuestions" => {      heading,      body,      questions,    },    _type == "iconCards" => {      heading,      cards,    },    _type == "cards" => {      headline,      subHeading,      ctaText,      cards[]{        _key,        headline,        badge,        body,        featured,        cta{          ctaText,          to->        },        image {          ...,          "palette": asset->metadata.palette        }      },    },    _type == "productCards" => {      cards[]{        name,        images,        price,        productCategory,        callout,        _key      }    },    _type == "portableTextSection" => {      body    },    _type == "stats" => {      heading,      stats    }  }}
 export type PageQueryResult = {
   sections: Array<
     | {
@@ -416,11 +711,18 @@ export type PageQueryResult = {
                   } & IconCards)
                 | ({
                     _key: string;
+                  } & PortableTextSection)
+                | ({
+                    _key: string;
                   } & ProductCards)
                 | ({
                     _key: string;
                   } & Split)
+                | ({
+                    _key: string;
+                  } & Stats)
               >;
+              language?: string;
             } | null;
           } | null;
           image: {
@@ -483,11 +785,18 @@ export type PageQueryResult = {
                   } & IconCards)
                 | ({
                     _key: string;
+                  } & PortableTextSection)
+                | ({
+                    _key: string;
                   } & ProductCards)
                 | ({
                     _key: string;
                   } & Split)
+                | ({
+                    _key: string;
+                  } & Stats)
               >;
+              language?: string;
             } | null;
             text: string | null;
           } | null;
@@ -574,11 +883,18 @@ export type PageQueryResult = {
                 } & IconCards)
               | ({
                   _key: string;
+                } & PortableTextSection)
+              | ({
+                  _key: string;
                 } & ProductCards)
               | ({
                   _key: string;
                 } & Split)
+              | ({
+                  _key: string;
+                } & Stats)
             >;
+            language?: string;
           } | null;
           text: string | null;
         } | null;
@@ -594,6 +910,53 @@ export type PageQueryResult = {
           _type: "iconCard";
           _key: string;
         }> | null;
+      }
+    | {
+        _key: string;
+        _type: "portableTextSection";
+        body: Array<
+          | ({
+              _key: string;
+            } & FrequentlyAskedQuestions)
+          | {
+              asset?: {
+                _ref: string;
+                _type: "reference";
+                _weak?: boolean;
+                [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+              };
+              hotspot?: SanityImageHotspot;
+              crop?: SanityImageCrop;
+              _type: "image";
+              _key: string;
+            }
+          | {
+              children?: Array<{
+                marks?: Array<string>;
+                text?: string;
+                _type: "span";
+                _key: string;
+              }>;
+              style?:
+                | "blockquote"
+                | "h1"
+                | "h2"
+                | "h3"
+                | "h4"
+                | "h5"
+                | "h6"
+                | "normal";
+              listItem?: "bullet" | "number";
+              markDefs?: Array<{
+                href?: string;
+                _type: "link";
+                _key: string;
+              }>;
+              level?: number;
+              _type: "block";
+              _key: string;
+            }
+        > | null;
       }
     | {
         _key: string;
@@ -619,6 +982,7 @@ export type PageQueryResult = {
             | "Men's Shoes"
             | null;
           callout: string | null;
+          _key: string;
         }> | null;
       }
     | {
@@ -660,8 +1024,22 @@ export type PageQueryResult = {
           };
           hotspot?: SanityImageHotspot;
           crop?: SanityImageCrop;
+          style?: "rounded" | "square";
           _type: "image";
         } | null;
+        styles: null;
+      }
+    | {
+        _key: string;
+        _type: "stats";
+        heading: string | null;
+        stats: Array<{
+          heading?: string;
+          number?: string;
+          subhead?: string;
+          _type: "stat";
+          _key: string;
+        }> | null;
       }
   > | null;
 } | null;

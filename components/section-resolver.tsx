@@ -5,6 +5,8 @@ import Cards from "./cards";
 import FAQ from "./faq";
 import IconCards from "./icon-cards";
 import ProductCards from "./product-cards";
+import PortableTextSection from "./portable-text-section";
+import Stats from "./stats";
 
 export default function SectionResolver({ section }) {
   switch (section._type) {
@@ -22,6 +24,11 @@ export default function SectionResolver({ section }) {
       return <IconCards {...section} />;
     case "productCards":
       return <ProductCards {...section} />;
+    case "portableTextSection":
+      return <PortableTextSection {...section} />;
+    case "stats":
+      return <Stats {...section} />;
+
     default:
       console.log("no component", section);
       return null;

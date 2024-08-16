@@ -21,7 +21,7 @@ export default function CarouselHero({ items }: CarouselHeroType) {
     }'
         className="relative"
       >
-        <div className="hs-carousel relative h-[30rem] w-full overflow-hidden rounded-2xl  bg-gray-100 md:h-[calc(100vh-212px)]">
+        <div className="hs-carousel relative h-[20rem] w-full overflow-hidden rounded-2xl  bg-gray-100 md:h-[calc(66vh-212px)]">
           <div className="hs-carousel-body absolute bottom-0 start-0 top-0 flex flex-nowrap opacity-0 transition-transform duration-700">
             {items &&
               items.map((item) => <CarouselItem key={item._key} item={item} />)}

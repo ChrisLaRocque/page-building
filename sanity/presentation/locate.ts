@@ -9,9 +9,9 @@ export const locate: DocumentLocationResolver = (params, context) => {
   if (params.type === "page") {
     // Subscribe to the latest slug and title
     const doc$ = context.documentStore.listenQuery(
-      `*[_id == $id][0]{slug,title}`,
+      `*[_id == $id][0]{slug,title,language}`,
       params,
-      { perspective: "previewDrafts" } // returns a draft article if it exists
+      { perspective: "previewDrafts" }, // returns a draft article if it exists
     );
     // Return a streaming list of locations
     return doc$.pipe(
@@ -24,11 +24,11 @@ export const locate: DocumentLocationResolver = (params, context) => {
           locations: [
             {
               title: doc.title || "Untitled",
-              href: `/${doc.slug.current}`,
+              href: `/${doc.language}/${doc.slug.current}`,
             },
           ],
         };
-      })
+      }),
     );
   }
   return null;

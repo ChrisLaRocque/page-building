@@ -1,12 +1,20 @@
 import { PortableText } from "next-sanity";
 import SanityImage from "./sanity-image";
 import { type Split } from "@/sanity/types";
+import clsx from "clsx";
 
-export default function Split({ headline, body, image }: Split) {
+export default function Split({ headline, body, image, styles }: Split) {
   return (
-    <section className="group mx-auto px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
+    <section
+      className={clsx("group mx-auto px-4 py-10 sm:px-6 lg:px-8 lg:py-14")}
+    >
       <div className="md:grid md:grid-cols-2 md:items-center md:gap-12 xl:gap-32">
-        <div className="overflow-hidden rounded-xl group-odd:order-last">
+        <div
+          className={clsx(
+            "overflow-hidden group-odd:order-last",
+            image && image.style == "square" ? "" : "rounded-xl",
+          )}
+        >
           {image && <SanityImage height={450} image={image} />}
         </div>
 

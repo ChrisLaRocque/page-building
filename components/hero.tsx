@@ -10,7 +10,7 @@ export default function Hero({ eyebrow, headline, image, button }: Hero) {
   return (
     <div
       style={image ? { backgroundImage: `url(${urlForImage(image)})` } : {}} // no way this is the only option, right?
-      className="relative flex h-[30rem] flex-col overflow-hidden rounded-2xl  bg-cover bg-center bg-no-repeat md:h-[calc(100vh-212px)]"
+      className="relative flex h-[20rem] flex-col overflow-hidden rounded-2xl  bg-cover bg-center bg-no-repeat md:h-[calc(66vh-212px)]"
     >
       <div
         style={{

@@ -7,6 +7,8 @@ import { cardsType } from "./cards";
 import { faqType } from "./frequently-asked-questions";
 import { iconCardType } from "./icon-cards";
 import { productCardsType } from "./product-cards";
+import { ptSectionType } from "./pt-section";
+import { statsType } from "./stats";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -18,5 +20,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     faqType,
     iconCardType,
     productCardsType,
+    ptSectionType,
+    statsType
   ],
 };

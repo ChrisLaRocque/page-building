@@ -13,12 +13,39 @@ export const splitType = defineType({
     defineField({
       name: "image",
       type: "image",
+      options: {
+        hotspot: true,
+      },
+      fields: [
+        defineField({
+          name: "style",
+          type: "string",
+          description: "Default is rounded",
+          options: {
+            list: ["rounded", "square"],
+          },
+        }),
+      ],
     }),
     defineField({
       name: "body",
       type: "array",
       of: [{ type: "block" }],
     }),
+    // defineField({
+    //   name: "styles",
+    //   type: "object",
+    //   fields: [
+    //     defineField({
+    //       name: "backgroundColor",
+    //       type: "string",
+    //       description: "Default is transparent",
+    //       options: {
+    //         list: ["transparent", "gray"],
+    //       },
+    //     }),
+    //   ],
+    // }),
   ],
   preview: {
     select: {
